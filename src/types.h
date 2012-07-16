@@ -38,6 +38,7 @@
 #include <cctype>
 #include <climits>
 #include <cstdlib>
+#include <ostream>
 
 #include "platform.h"
 
@@ -77,7 +78,52 @@ const bool Is64Bit = true;
 const bool Is64Bit = false;
 #endif
 
-typedef uint64_t Key;
+class Key {
+  uint64_t v1;
+  friend bool operator==(const Key,const Key);
+  friend bool operator!=(const Key,const Key);
+  friend bool operator<(const Key,const Key);
+  friend Key operator^(const Key,const Key);
+  friend Key operator&(const Key,const Key);
+  friend void operator^=(Key&,const Key);
+  friend std::ostream& operator<<(std::ostream &, const Key);
+
+public:
+  Key(const uint64_t m1) : v1(m1) {}
+  uint64_t getInt() const {
+    return v1;
+  }
+  bool isNotZero() const {
+    return 0 != v1;
+  }
+  
+  Key() :v1(0) {} // hope this doesnt get called too often
+};
+
+inline bool operator== (const Key x, const Key y) {
+  return x.v1 == y.v1;
+}
+
+inline bool operator!= (const Key x, const Key y) {
+  return x.v1 != y.v1;
+}
+
+inline bool operator< (const Key x, const Key y) {
+  return x.v1 < y.v1;
+}
+
+inline Key operator^(const Key x,const Key y) {
+  return Key(x.v1 ^ y.v1);
+}
+
+inline Key operator&(const Key x,const Key y) {
+  return Key(x.v1 & y.v1);
+}
+
+inline void operator^=(Key &x, const Key y){
+  x.v1 ^= y.v1;
+}
+
 typedef uint64_t Bitboard;
 
 const int MAX_MOVES      = 192;

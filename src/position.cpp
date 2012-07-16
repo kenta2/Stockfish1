@@ -1479,7 +1479,7 @@ void Position::init() {
       while (b)
       {
           Key k = zobCastle[1ULL << pop_lsb(&b)];
-          zobCastle[cr] ^= k ? k : rk.rand<Key>();
+          zobCastle[cr] ^= k.isNotZero() ? k : rk.rand<Key>();
       }
   }
 

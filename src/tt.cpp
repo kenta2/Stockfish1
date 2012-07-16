@@ -86,7 +86,7 @@ void TranspositionTable::store(const Key posKey, Value v, Bound t, Depth d, Move
 
   int c1, c2, c3;
   TTEntry *tte, *replace;
-  uint32_t posKey32 = posKey >> 32; // Use the high 32 bits as key inside the cluster
+  uint32_t posKey32 = posKey.getInt() >> 32; // Use the high 32 bits as key inside the cluster
 
   tte = replace = first_entry(posKey);
 
@@ -120,7 +120,7 @@ void TranspositionTable::store(const Key posKey, Value v, Bound t, Depth d, Move
 
 TTEntry* TranspositionTable::probe(const Key posKey) const {
 
-  uint32_t posKey32 = posKey >> 32;
+  uint32_t posKey32 = posKey.getInt() >> 32;
   TTEntry* tte = first_entry(posKey);
 
   for (int i = 0; i < ClusterSize; i++, tte++)

@@ -59,7 +59,7 @@ private:
 template<class Entry, int Size>
 struct HashTable {
   HashTable() : e(Size, Entry()) { memset(&e[0], 0, sizeof(Entry) * Size); }
-  Entry* operator[](Key k) { return &e[(uint32_t)k & (Size - 1)]; }
+  Entry* operator[](Key k) { return &e[(uint32_t)k.getInt() & (Size - 1)]; }
 
 private:
   std::vector<Entry> e;

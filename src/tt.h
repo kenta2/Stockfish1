@@ -121,7 +121,7 @@ extern TranspositionTable TT;
 
 inline TTEntry* TranspositionTable::first_entry(const Key posKey) const {
 
-  return entries[((uint32_t)posKey) & (size - 1)].data;
+  return entries[((uint32_t)posKey.getInt()) & (size - 1)].data;
 }
 
 
